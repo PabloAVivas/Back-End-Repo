@@ -1,5 +1,6 @@
 package com.food.BackEndRepo.entity.dto.usuario;
 
+import com.food.BackEndRepo.entity.dto.enums.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,5 @@ public class UsuarioDto {
     String apellido;
     String email;
     int celular;
+    Rol rol;
 }
