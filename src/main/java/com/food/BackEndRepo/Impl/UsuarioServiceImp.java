@@ -1,4 +1,4 @@
-package com.food.BackEndRepo.entity.Impl;
+package com.food.BackEndRepo.Impl;
 
 import com.food.BackEndRepo.entity.Usuario;
 import com.food.BackEndRepo.entity.dto.usuario.UsuarioCreate;
@@ -15,6 +15,8 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.food.BackEndRepo.entity.dto.enums.Rol.USUARIO;
 
 @Service
 public class UsuarioServiceImp implements UsuarioService {
@@ -37,7 +39,17 @@ public class UsuarioServiceImp implements UsuarioService {
 
     @Override
     public UsuarioDto edit(UsuarioEdit d, Long id) {
-        return null;
+        UsuarioDto usuarioDto = findById(id);
+        Usuario usuario = new Usuario();
+        usuario.setId(usuarioDto.getId());
+        usuario.setNombre(usuarioDto.getNombre());
+        usuario.setApellido(usuarioDto.getApellido());
+        usuario.setEmail(usuarioDto.getEmail());
+        usuario.setCelular(d.getCelular());
+        usuario.setContrasena(Sha256Util.hash(d.getContrasena()));
+        usuario.setRol(usuarioDto.getRol());
+        usuarioRepository.save(usuario);
+        return usuarioMapper.toDto(usuario);
     }
 
     @Override

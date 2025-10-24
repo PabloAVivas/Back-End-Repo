@@ -3,6 +3,7 @@ package com.food.BackEndRepo.entity.mapper;
 import com.food.BackEndRepo.entity.Usuario;
 import com.food.BackEndRepo.entity.dto.usuario.UsuarioCreate;
 import com.food.BackEndRepo.entity.dto.usuario.UsuarioDto;
+import com.food.BackEndRepo.entity.dto.usuario.UsuarioEdit;
 import com.food.BackEndRepo.service.Sha256Util;
 import org.springframework.stereotype.Component;
 import static com.food.BackEndRepo.entity.dto.enums.Rol.USUARIO;

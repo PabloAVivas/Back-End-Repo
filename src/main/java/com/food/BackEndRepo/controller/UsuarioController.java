@@ -1,6 +1,7 @@
 package com.food.BackEndRepo.controller;
 
 import com.food.BackEndRepo.entity.dto.usuario.UsuarioCreate;
+import com.food.BackEndRepo.entity.dto.usuario.UsuarioEdit;
 import com.food.BackEndRepo.entity.dto.usuario.UsuarioLogin;
 import com.food.BackEndRepo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,16 @@ public class UsuarioController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> edit(@RequestBody UsuarioEdit usuarioEdit, @PathVariable Long id){
+        try {
+            return ResponseEntity.ok(usuarioService.edit(usuarioEdit, id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
             usuarioService.delete(id);

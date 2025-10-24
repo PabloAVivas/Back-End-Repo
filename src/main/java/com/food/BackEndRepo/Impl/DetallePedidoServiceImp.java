@@ -1,4 +1,4 @@
-package com.food.BackEndRepo.entity.Impl;
+package com.food.BackEndRepo.Impl;
 
 public class DetallePedidoServiceImp {
 }
