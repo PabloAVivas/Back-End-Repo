@@ -17,6 +17,7 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
+    //Ruta para crear usuarios
     @PostMapping
     public ResponseEntity<?> save(@RequestBody UsuarioCreate usuarioCreate){
         try{
@@ -26,6 +27,7 @@ public class UsuarioController {
         }
     }
 
+    //Ruta para buscar a un usuario por id
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         try{
@@ -35,6 +37,7 @@ public class UsuarioController {
         }
     }
 
+    //Ruta para buscar a todos los usuarios
     @GetMapping()
     public ResponseEntity<?> findAll(){
         try{
@@ -44,6 +47,7 @@ public class UsuarioController {
         }
     }
 
+    //Ruta para editar a un usuario por id
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> edit(@RequestBody UsuarioEdit usuarioEdit, @PathVariable Long id){
         try {
@@ -53,6 +57,7 @@ public class UsuarioController {
         }
     }
 
+    //Ruta para eliminar a un usuario
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
@@ -62,6 +67,8 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    //Ruta para verificar si un email existe
     @GetMapping("/email/{email}")
     public ResponseEntity<?> findByEmail(@PathVariable String email) {
         try {
@@ -72,6 +79,7 @@ public class UsuarioController {
         }
     }
 
+    //Ruta para iniciar sesion
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioLogin userL){
 

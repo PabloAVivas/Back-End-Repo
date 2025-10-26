@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Sha256Util {
+    //Se recibe un texto String y este lo devuelve hasheado
     public static String hash(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

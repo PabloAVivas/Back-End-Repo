@@ -27,6 +27,9 @@ public class UsuarioServiceImp implements UsuarioService {
     @Autowired
     UsuarioMapper usuarioMapper;
 
+    //Recibe parametros para crear un usuario, verifica si el email ingresado ya existe
+    //si existe detiene la creacion y devuelve un RuntimeException
+    //si no, crea el usuario y lo guarda en la base de datos
     @Override
     public UsuarioDto save(UsuarioCreate usuarioCreate) {
         Usuario usuario = usuarioMapper.toEntity(usuarioCreate);
@@ -37,6 +40,8 @@ public class UsuarioServiceImp implements UsuarioService {
         return usuarioMapper.toDto(usuario);
     }
 
+    //Recibe los parametros a editar y un id
+    //modifica los datos y los guarda en la base de datos
     @Override
     public UsuarioDto edit(UsuarioEdit d, Long id) {
         UsuarioDto usuarioDto = findById(id);
@@ -52,27 +57,33 @@ public class UsuarioServiceImp implements UsuarioService {
         return usuarioMapper.toDto(usuario);
     }
 
+    //Recibe un id para buscar un usuario con ese id
     @Override
     public UsuarioDto findById(Long id) {
         return usuarioMapper.toDto(usuarioRepository.findById(id).orElseThrow(()-> new NullPointerException("No se encontro al curso con el id " + id)));
     }
 
+    //Busca a todos los usuarios existentes
     @Override
     public List<UsuarioDto> findAll() {
         return usuarioRepository.findAll().stream().map(usuarioMapper::toDto).toList();
     }
 
+    //Recibe un id del usuario a eliminar
     @Override
     public void delete(Long id) {
         usuarioRepository.deleteById(id);
     }
 
+    //Recibe un email y lo busca si esta en la base de datos
     @Override
     public UsuarioDto findByEmail(String email) {
         return usuarioMapper.toDto(usuarioRepository.findByEmail(email).orElseThrow(()-> new NullPointerException("No se encontro el email " + email)));
 
     }
 
+    //Recibe un email y una contraseña, hashea la contraseña y la compara los datos con el usuario
+    //para ver si coinciden
     @Override
     public Optional<UsuarioDto> login(String email, String password){
 
