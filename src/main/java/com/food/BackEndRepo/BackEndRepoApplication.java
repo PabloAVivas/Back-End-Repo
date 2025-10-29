@@ -1,8 +1,12 @@
 package com.food.BackEndRepo;
 
-import com.food.BackEndRepo.entity.Usuario;
-import com.food.BackEndRepo.entity.dto.enums.Rol;
-import com.food.BackEndRepo.repository.UsuarioRepository;
+import com.food.BackEndRepo.entity.Category;
+import com.food.BackEndRepo.entity.Product;
+import com.food.BackEndRepo.entity.Users;
+import com.food.BackEndRepo.entity.dto.enums.Role;
+import com.food.BackEndRepo.repository.CategoryRepository;
+import com.food.BackEndRepo.repository.ProductRepository;
+import com.food.BackEndRepo.repository.UserRepository;
 import com.food.BackEndRepo.service.Sha256Util;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,10 +15,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BackEndRepoApplication implements CommandLineRunner {
 
-	private final UsuarioRepository usuarioRepository;
+	private final UserRepository userRepository;
+	private final CategoryRepository categoryRepository;
+	private final ProductRepository productRepository;
 
-	public BackEndRepoApplication(UsuarioRepository usuarioRepository) {
-		this.usuarioRepository = usuarioRepository;
+	public BackEndRepoApplication(UserRepository userRepository, CategoryRepository categoryRepository, ProductRepository productRepository) {
+		this.userRepository = userRepository;
+		this.categoryRepository = categoryRepository;
+		this.productRepository = productRepository;
 	}
 
 	public static void main(String[] args) {
@@ -23,52 +31,58 @@ public class BackEndRepoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		final String ADMIN_NOMBRE = "Admin";
-		final String ADMIN_APELLIDO = "Istrador";
-		final String ADMIN_EMAIL = "admin@email.com";
-		final int ADMIN_CELULAR = 1234567890;
-		final String ADMIN_CONTRASENA = "Admin123";
-		final Rol ADMIN_ROL = Rol.ADMIN;
 
-		if (!usuarioRepository.existsByEmail(ADMIN_EMAIL)) {
+		if (!userRepository.existsByEmail("admin@email.com")) {
+			Users admin = new Users();
+			admin.setName("Admin");
+			admin.setLastName("Istrador");
+			admin.setEmail("admin@email.com");
+			admin.setCellPhone(1234567890);
+			admin.setPassword(Sha256Util.hash("Admin123"));
+			admin.setRole(Role.ADMIN);
 
-			String hashedContrasena = Sha256Util.hash(ADMIN_CONTRASENA);
-			Usuario admin = new Usuario();
-			admin.setNombre(ADMIN_NOMBRE);
-			admin.setApellido(ADMIN_APELLIDO);
-			admin.setEmail(ADMIN_EMAIL);
-			admin.setCelular(ADMIN_CELULAR);
-			admin.setContrasena(hashedContrasena);
-			admin.setRol(ADMIN_ROL);
-
-			usuarioRepository.save(admin);
-			System.out.println("Usuario ADMIN de prueba creado: " + ADMIN_EMAIL);
+			userRepository.save(admin);
+			System.out.println("Test ADMIN user created: admin@email.com");
 		} else {
-			System.out.println("El usuario ADMIN de prueba ya existe.");
+			System.out.println("The test ADMIN user already exists.");
 		}
 
-		final String USUARIO_NOMBRE = "Usu";
-		final String USUARIO_APELLIDO = "Ario";
-		final String USUARIO_EMAIL = "usuario@email.com";
-		final int USUARIO_CELULAR = 1234567890;
-		final String USUARIO_CONTRASENA = "Usuario123";
-		final Rol USUARIO_ROL = Rol.USUARIO;
+		if (!userRepository.existsByEmail("usuario@email.com")) {
+			Users usuario = new Users();
+			usuario.setName("Usu");
+			usuario.setLastName("Ario");
+			usuario.setEmail("usuario@email.com");
+			usuario.setCellPhone(1234567890);
+			usuario.setPassword(Sha256Util.hash("Usuario123"));
+			usuario.setRole(Role.USER);
 
-		if (!usuarioRepository.existsByEmail(USUARIO_EMAIL)) {
-
-			String hashedContrasena = Sha256Util.hash(USUARIO_CONTRASENA);
-			Usuario usuario = new Usuario();
-			usuario.setNombre(USUARIO_NOMBRE);
-			usuario.setApellido(USUARIO_APELLIDO);
-			usuario.setEmail(USUARIO_EMAIL);
-			usuario.setCelular(USUARIO_CELULAR);
-			usuario.setContrasena(hashedContrasena);
-			usuario.setRol(USUARIO_ROL);
-
-			usuarioRepository.save(usuario);
-			System.out.println("Usuario USUARIO de prueba creado: " + USUARIO_EMAIL);
+			userRepository.save(usuario);
+			System.out.println("User Test USER created: usuario@email.com");
 		} else {
-			System.out.println("El usuario USUARIO de prueba ya existe.");
+			System.out.println("The user test USER already exists.");
+		}
+
+		if(!categoryRepository.existsById(1L)){
+			Category category = new Category();
+			category.setName("Hamburguesas");
+			category.setDescription("Diferentes hamburguesas de tipo smash");
+			category.setUrl("https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg");
+			categoryRepository.save(category);
+			System.out.println("The test CATEGORY was created");
+		} else {
+			System.out.println("The test CATEGORY alredy exist");
+		}
+		if (!productRepository.existsById(1L)){
+			Product product = new Product();
+			product.setName("Hamburguesa triple smash");
+			product.setDescription("Hamburguesa triple tasty turbo bacon (con cebolla)");
+			product.setPrice(25000);
+			product.setCategory(categoryRepository.findById(1L).get());
+			product.setUrl("https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg");
+			productRepository.save(product);
+			System.out.println("The test PRODUCT was created");
+		}else {
+			System.out.println("The test PRODUCT alredy exist");
 		}
 	}
 }
