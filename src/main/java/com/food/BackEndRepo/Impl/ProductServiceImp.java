@@ -5,6 +5,7 @@ import com.food.BackEndRepo.entity.dto.product.ProductCreate;
 import com.food.BackEndRepo.entity.dto.product.ProductDto;
 import com.food.BackEndRepo.entity.dto.product.ProductEdit;
 import com.food.BackEndRepo.entity.mapper.ProductMapper;
+import com.food.BackEndRepo.repository.CategoryRepository;
 import com.food.BackEndRepo.repository.ProductRepository;
 import com.food.BackEndRepo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     ProductMapper productMapper;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @Override
     public ProductDto save(ProductCreate productCreate) {
         Product product = productMapper.toEntity(productCreate);
@@ -33,8 +37,9 @@ public class ProductServiceImp implements ProductService {
         product.setName(productEdit.getName());
         product.setDescription(productEdit.getDescription());
         product.setPrice(productEdit.getPrice());
+        product.setCategory(categoryRepository.findById(productEdit.getCategoryId()).get());
         product.setUrl(productEdit.getUrl());
-        return null;
+        return productMapper.toDto(product);
     }
 
     @Override
