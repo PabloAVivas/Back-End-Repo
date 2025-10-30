@@ -44,6 +44,7 @@ public class UserServiceImp implements UserService {
         Users user = userRepository.findById(id).orElseThrow(()-> new NullPointerException("The user with the id was not found " + id));
         user.setCellPhone(userEdit.getCellPhone());
         user.setPassword(Sha256Util.hash(userEdit.getPassword()));
+        userRepository.save(user);
         return userMapper.toDto(user);
     }
 

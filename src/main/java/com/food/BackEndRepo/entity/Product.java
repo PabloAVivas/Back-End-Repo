@@ -17,10 +17,12 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    private int stock;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    private String url;
+    private String urlImg;
+    private boolean availableProduct;
 }

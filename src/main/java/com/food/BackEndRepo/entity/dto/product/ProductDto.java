@@ -15,6 +15,8 @@ public class ProductDto {
     String name;
     String description;
     double price;
+    int stock;
     CategoryDto category;
-    String url;
+    String urlImg;
+    boolean availableProduct;
 }

@@ -19,8 +19,10 @@ public class ProductMapper {
         product.setName(productC.name());
         product.setDescription(productC.description());
         product.setPrice(productC.price());
+        product.setStock(productC.stock());
         product.setCategory(categoryRepository.findById(productC.categoryId()).get());
-        product.setUrl(productC.url());
+        product.setUrlImg(productC.urlImg());
+        product.setAvailableProduct(true);
         return product;
     }
 
@@ -30,8 +32,10 @@ public class ProductMapper {
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
+                product.getStock(),
                 categoryMapper.toDto(product.getCategory()),
-                product.getUrl()
+                product.getUrlImg(),
+                product.isAvailableProduct()
         );
     }
 }

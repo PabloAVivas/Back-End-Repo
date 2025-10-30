@@ -37,8 +37,11 @@ public class ProductServiceImp implements ProductService {
         product.setName(productEdit.getName());
         product.setDescription(productEdit.getDescription());
         product.setPrice(productEdit.getPrice());
+        product.setStock(productEdit.getStock());
         product.setCategory(categoryRepository.findById(productEdit.getCategoryId()).get());
-        product.setUrl(productEdit.getUrl());
+        product.setUrlImg(productEdit.getUrlImg());
+        product.setAvailableProduct(productEdit.isAvailableProduct());
+        productRepository.save(product);
         return productMapper.toDto(product);
     }
 
@@ -50,6 +53,10 @@ public class ProductServiceImp implements ProductService {
     @Override
     public List<ProductDto> findAll() {
         return productRepository.findAll().stream().map(productMapper::toDto).toList();
+    }
+    @Override
+    public List<ProductDto> findAllByAvailableProductTrue() {
+        return productRepository.findAllByAvailableProductTrue().stream().map(productMapper::toDto).toList();
     }
 
     @Override

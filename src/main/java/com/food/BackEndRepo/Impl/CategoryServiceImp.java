@@ -33,6 +33,7 @@ public class CategoryServiceImp implements CategoryService {
         category.setName(categoryEdit.getName());
         category.setDescription(categoryEdit.getDescription());
         category.setUrl(categoryEdit.getUrl());
+        categoryRepository.save(category);
         return categoryMapper.toDto(category);
     }
 

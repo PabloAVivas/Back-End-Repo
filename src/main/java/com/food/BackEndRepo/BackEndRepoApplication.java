@@ -77,8 +77,10 @@ public class BackEndRepoApplication implements CommandLineRunner {
 			product.setName("Hamburguesa triple smash");
 			product.setDescription("Hamburguesa triple tasty turbo bacon (con cebolla)");
 			product.setPrice(25000);
+			product.setStock(55);
 			product.setCategory(categoryRepository.findById(1L).get());
-			product.setUrl("https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg");
+			product.setUrlImg("https://www.foodandwine.com/thmb/XE8ubzwObCIgMw7qJ9CsqUZocNM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MSG-Smash-Burger-FT-RECIPE0124-d9682401f3554ef683e24311abdf342b.jpg");
+			product.setAvailableProduct(true);
 			productRepository.save(product);
 			System.out.println("The test PRODUCT was created");
 		}else {

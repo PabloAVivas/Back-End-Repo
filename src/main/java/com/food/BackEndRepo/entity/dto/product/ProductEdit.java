@@ -14,6 +14,8 @@ public class ProductEdit {
     String name;
     String description;
     double price;
+    int stock;
     Long categoryId;
-    String url;
+    String urlImg;
+    boolean availableProduct;
 }

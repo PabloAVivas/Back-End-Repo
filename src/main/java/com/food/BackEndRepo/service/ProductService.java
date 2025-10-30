@@ -11,6 +11,7 @@ public interface ProductService {
     public ProductDto edit (ProductEdit productEdit, Long id);
     public ProductDto findById (Long id);
     public List<ProductDto> findAll();
+    public List<ProductDto> findAllByAvailableProductTrue();
     public void delete (Long id);
     //public ProductDto findByCategoryName(String name);
 }

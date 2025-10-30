@@ -42,10 +42,20 @@ public class ProductController {
     }
 
     //Ruta para buscar a todos los usuarios
-    @GetMapping()
+    @GetMapping("/admin")
     public ResponseEntity<?> findAll(){
         try{
             return ResponseEntity.ok(productService.findAll());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    //Ruta para buscar a todos los usuarios
+    @GetMapping("/user")
+    public ResponseEntity<?> findAllByAvailableProductTrue(){
+        try{
+            return ResponseEntity.ok(productService.findAllByAvailableProductTrue());
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
