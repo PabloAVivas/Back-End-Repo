@@ -13,5 +13,6 @@ public interface ProductService {
     public List<ProductDto> findAll();
     public List<ProductDto> findAllByAvailableProductTrue();
     public void delete (Long id);
-    //public ProductDto findByCategoryName(String name);
+    public void deletedBoolean (Long id);
+    public List<ProductDto> findByCategoryName(String name);
 }

@@ -13,6 +13,7 @@ public interface UserService {
     public UserDto findById (Long id);
     public List<UserDto> findAll();
     public void delete (Long id);
+    public void deletedBoolean (Long id);
     public UserDto findByEmail(String email);
     Optional<UserDto> login (String email, String password);
 }

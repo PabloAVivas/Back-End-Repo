@@ -28,7 +28,8 @@ public class UserMapper {
                 user.getLastName(),
                 user.getEmail(),
                 user.getCellPhone(),
-                user.getRole()
+                user.getRole(),
+                user.isDeleted()
         );
     }
 }

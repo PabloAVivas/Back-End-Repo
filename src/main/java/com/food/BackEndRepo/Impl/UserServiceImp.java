@@ -9,6 +9,7 @@ import com.food.BackEndRepo.repository.UserRepository;
 import com.food.BackEndRepo.service.Sha256Util;
 import com.food.BackEndRepo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,6 +65,13 @@ public class UserServiceImp implements UserService {
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void deletedBoolean(Long id) {
+        Users user = userRepository.findById(id).orElseThrow(()-> new NullPointerException("The user with the id was not found " + id));
+        user.setDeleted(!user.isDeleted());
+        userRepository.save(user);
     }
 
     //Recibe un email y lo busca si esta en la base de datos

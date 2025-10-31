@@ -63,4 +63,16 @@ public class ProductServiceImp implements ProductService {
     public void delete(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public void deletedBoolean(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(()-> new NullPointerException("The product with the id was not found " + id));
+        product.setDeleted(!product.isDeleted());
+        productRepository.save(product);
+    }
+
+    @Override
+    public List<ProductDto> findByCategoryName(String name) {
+            return productRepository.findByCategoryName(name).stream().map(productMapper::toDto).toList();
+    }
 }

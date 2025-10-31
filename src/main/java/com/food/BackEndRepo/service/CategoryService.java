@@ -12,4 +12,5 @@ public interface CategoryService {
     public CategoryDto findById (Long id);
     public List<CategoryDto> findAll();
     public void delete (Long id);
+    public void deletedBoolean (Long id);
 }

@@ -17,4 +17,5 @@ public class UserDto {
     String email;
     int cellPhone;
     Role role;
+    boolean deleted;
 }

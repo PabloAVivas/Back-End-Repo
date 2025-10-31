@@ -68,6 +68,16 @@ public class UserController {
         }
     }
 
+    @PatchMapping("/deletedBoolean/{id}")
+    public ResponseEntity<?> deleted(@PathVariable Long id){
+        try{
+            userService.deletedBoolean(id);
+            return ResponseEntity.ok("Deleted Boolean user");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     //Ruta para verificar si un email existe
     @GetMapping("/email/{email}")
     public ResponseEntity<?> findByEmail(@PathVariable String email) {

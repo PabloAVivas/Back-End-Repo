@@ -1,6 +1,7 @@
 package com.food.BackEndRepo.Impl;
 
 import com.food.BackEndRepo.entity.Category;
+import com.food.BackEndRepo.entity.Users;
 import com.food.BackEndRepo.entity.dto.category.CategoryCreate;
 import com.food.BackEndRepo.entity.dto.category.CategoryDto;
 import com.food.BackEndRepo.entity.dto.category.CategoryEdit;
@@ -50,5 +51,12 @@ public class CategoryServiceImp implements CategoryService {
     @Override
     public void delete(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public void deletedBoolean(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(()-> new NullPointerException("The category with the id was not found " + id));
+        category.setDeleted(!category.isDeleted());
+        categoryRepository.save(category);
     }
 }

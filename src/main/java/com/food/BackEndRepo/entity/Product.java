@@ -2,18 +2,15 @@ package com.food.BackEndRepo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@SuperBuilder
+public class Product extends Base {
     private String name;
     private String description;
     private double price;

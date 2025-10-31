@@ -2,10 +2,8 @@ package com.food.BackEndRepo.entity;
 
 import com.food.BackEndRepo.entity.dto.enums.State;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
@@ -14,12 +12,8 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Orders {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@SuperBuilder
+public class Orders extends Base {
     private LocalDate date;
     private State state;
     private double total;

@@ -3,7 +3,6 @@ package com.food.BackEndRepo.controller;
 import com.food.BackEndRepo.entity.Product;
 import com.food.BackEndRepo.entity.dto.product.ProductCreate;
 import com.food.BackEndRepo.entity.dto.product.ProductEdit;
-import com.food.BackEndRepo.repository.ProductRepository;
 import com.food.BackEndRepo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +17,6 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService productService;
-
-    @Autowired
-    ProductRepository productRepository;
 
     @PostMapping("/create")
     public ResponseEntity<?> save(@RequestBody ProductCreate productCreate){
@@ -82,16 +78,22 @@ public class ProductController {
         }
     }
 
+    @PatchMapping("/deletedBoolean/{id}")
+    public ResponseEntity<?> deleted(@PathVariable Long id){
+        try{
+            productService.deletedBoolean(id);
+            return ResponseEntity.ok("Deleted Boolean product");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/categories")
-    public ResponseEntity<List<Product>> getProduct(
-            @RequestParam(required = false) String categoryName //help:http://localhost:8080/product/categories?categoryName=Burger
-    ) {
-        if (categoryName != null && !categoryName.isEmpty()) {
-            List<Product> productFiltered = productRepository.findByCategoryName(categoryName);
-            return ResponseEntity.ok(productFiltered);
-        } else {
-            List<Product> allProduct = productRepository.findAll();
-            return ResponseEntity.ok(allProduct);
+    public ResponseEntity<?> getProduct(@RequestParam(required = false) String categoryName){ //help:http://localhost:8080/product/categories?categoryName=Burger
+        try {
+            return ResponseEntity.ok(productService.findByCategoryName(categoryName));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

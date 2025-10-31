@@ -64,4 +64,14 @@ public class CategoryController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PatchMapping("/deletedBoolean/{id}")
+    public ResponseEntity<?> deleted(@PathVariable Long id){
+        try{
+            categoryService.deletedBoolean(id);
+            return ResponseEntity.ok("Deleted Boolean category");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
