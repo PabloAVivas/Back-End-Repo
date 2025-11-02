@@ -1,6 +1,5 @@
 package com.food.BackEndRepo.controller;
 
-import com.food.BackEndRepo.entity.Product;
 import com.food.BackEndRepo.entity.dto.product.ProductCreate;
 import com.food.BackEndRepo.entity.dto.product.ProductEdit;
 import com.food.BackEndRepo.service.ProductService;
@@ -9,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @CrossOrigin("*")
 @RequestMapping("/product")
@@ -18,6 +15,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    //Ruta para crear un producto
     @PostMapping("/create")
     public ResponseEntity<?> save(@RequestBody ProductCreate productCreate){
         try{
@@ -27,7 +25,7 @@ public class ProductController {
         }
     }
 
-    //Ruta para buscar a un usuario por id
+    //Ruta para buscar a un producto por id
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         try{
@@ -37,7 +35,7 @@ public class ProductController {
         }
     }
 
-    //Ruta para buscar a todos los usuarios
+    //Ruta para listar todos los productos
     @GetMapping("/admin")
     public ResponseEntity<?> findAll(){
         try{
@@ -47,7 +45,7 @@ public class ProductController {
         }
     }
 
-    //Ruta para buscar a todos los usuarios
+    //Ruta para listar todos los productos que esten disponibles
     @GetMapping("/user")
     public ResponseEntity<?> findAllByAvailableProductTrue(){
         try{
@@ -57,7 +55,7 @@ public class ProductController {
         }
     }
 
-    //Ruta para editar a un usuario por id
+    //Ruta para editar un producto por id
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> edit(@RequestBody ProductEdit productEdit, @PathVariable Long id){
         try {
@@ -67,7 +65,7 @@ public class ProductController {
         }
     }
 
-    //Ruta para eliminar a un usuario
+    //Ruta para eliminar a un producto de la base de datos
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
@@ -78,6 +76,7 @@ public class ProductController {
         }
     }
 
+    //Ruta para "eliminar" a un producto pero sin borrarlo de la base de datos
     @PatchMapping("/deletedBoolean/{id}")
     public ResponseEntity<?> deleted(@PathVariable Long id){
         try{
@@ -88,6 +87,7 @@ public class ProductController {
         }
     }
 
+    //Ruta para filtrar los productos por nombre de categoria
     @GetMapping("/categories")
     public ResponseEntity<?> getProduct(@RequestParam(required = false) String categoryName){ //help:http://localhost:8080/product/categories?categoryName=Burger
         try {

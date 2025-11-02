@@ -15,6 +15,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
+    //Ruta para crear una categoria
     @PostMapping("/create")
     public ResponseEntity<?> save(@RequestBody CategoryCreate categoryCreate){
         try{
@@ -24,7 +25,7 @@ public class CategoryController {
         }
     }
 
-    //Ruta para buscar a un usuario por id
+    //Ruta para buscar una categoria por id
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         try{
@@ -34,7 +35,7 @@ public class CategoryController {
         }
     }
 
-    //Ruta para buscar a todos los usuarios
+    //Ruta para buscar todas las categorias
     @GetMapping()
     public ResponseEntity<?> findAll(){
         try{
@@ -44,7 +45,7 @@ public class CategoryController {
         }
     }
 
-    //Ruta para editar a un usuario por id
+    //Ruta para editar una categoria por id
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> edit(@RequestBody CategoryEdit categoryEdit, @PathVariable Long id){
         try {
@@ -54,7 +55,7 @@ public class CategoryController {
         }
     }
 
-    //Ruta para eliminar a un usuario
+    //Ruta para eliminar una categoria de la base de datos por id
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
@@ -65,6 +66,7 @@ public class CategoryController {
         }
     }
 
+    //Ruta para "eliminar" una categoria pero sin borrarla de la base de datos por id
     @PatchMapping("/deletedBoolean/{id}")
     public ResponseEntity<?> deleted(@PathVariable Long id){
         try{

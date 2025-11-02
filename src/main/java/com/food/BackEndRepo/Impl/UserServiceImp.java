@@ -9,7 +9,6 @@ import com.food.BackEndRepo.repository.UserRepository;
 import com.food.BackEndRepo.service.Sha256Util;
 import com.food.BackEndRepo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,12 +60,13 @@ public class UserServiceImp implements UserService {
         return userRepository.findAll().stream().map(userMapper::toDto).toList();
     }
 
-    //Recibe un id del usuario a eliminar
+    //Recibe un id del usuario a eliminar de la base de datos
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
+    //Recibe un id del usuario para "eliminarlo" pero no de la base de datos
     @Override
     public void deletedBoolean(Long id) {
         Users user = userRepository.findById(id).orElseThrow(()-> new NullPointerException("The user with the id was not found " + id));

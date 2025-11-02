@@ -57,7 +57,7 @@ public class UserController {
         }
     }
 
-    //Ruta para eliminar a un usuario
+    //Ruta para eliminar a un usuario de la base de datos por id
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
@@ -68,6 +68,7 @@ public class UserController {
         }
     }
 
+    //Ruta para "eliminar" un usuario pero sin borrarlo de la base de datos por id
     @PatchMapping("/deletedBoolean/{id}")
     public ResponseEntity<?> deleted(@PathVariable Long id){
         try{
@@ -78,7 +79,7 @@ public class UserController {
         }
     }
 
-    //Ruta para verificar si un email existe
+    //Ruta para verificar si un email existe recibiendo un email
     @GetMapping("/email/{email}")
     public ResponseEntity<?> findByEmail(@PathVariable String email) {
         try {
