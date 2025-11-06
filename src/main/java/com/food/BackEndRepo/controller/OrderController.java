@@ -55,8 +55,8 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @PutMapping("/detailAdd/{id}")
-    public ResponseEntity<?> edit(@RequestBody Long id, @PathVariable Long idDetail){
+    @PutMapping("/detailAdd/{id}/{idDetail}")
+    public ResponseEntity<?> edit(@PathVariable Long id, @PathVariable Long idDetail){
         try {
             return ResponseEntity.ok(orderService.detailAdd(id, idDetail));
         } catch (Exception e) {

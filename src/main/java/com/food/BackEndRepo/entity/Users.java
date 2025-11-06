@@ -25,7 +25,7 @@ public class Users extends Base {
     private Role role;
 
     @OneToMany
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "users_id")
     @Builder.Default
     private List<Orders> orders = new ArrayList<>();
 
