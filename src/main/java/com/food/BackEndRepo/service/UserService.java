@@ -10,10 +10,10 @@ import java.util.Optional;
 public interface UserService {
     public UserDto save (UserCreate userCreate);
     public UserDto edit (UserEdit userEdit, Long id);
+    public UserDto orderAdd (Long id, Long idOrder);
     public UserDto findById (Long id);
-    public List<UserDto> findAll();
+    public List<UserDto> findAllByDeletedFalse();
     public void delete (Long id);
-    public void deletedBoolean (Long id);
     public UserDto findByEmail(String email);
     Optional<UserDto> login (String email, String password);
 }

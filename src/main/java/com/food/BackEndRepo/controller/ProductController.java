@@ -37,9 +37,9 @@ public class ProductController {
 
     //Ruta para listar todos los productos
     @GetMapping("/admin")
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAllByDeletedFalse(){
         try{
-            return ResponseEntity.ok(productService.findAll());
+            return ResponseEntity.ok(productService.findAllByDeletedFalse());
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -47,9 +47,9 @@ public class ProductController {
 
     //Ruta para listar todos los productos que esten disponibles
     @GetMapping("/user")
-    public ResponseEntity<?> findAllByAvailableProductTrue(){
+    public ResponseEntity<?> findAllByAvailableProductTrueAndDeletedFalse(){
         try{
-            return ResponseEntity.ok(productService.findAllByAvailableProductTrue());
+            return ResponseEntity.ok(productService.findAllByAvailableProductTrueAndDeletedFalse());
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -65,23 +65,12 @@ public class ProductController {
         }
     }
 
-    //Ruta para eliminar a un producto de la base de datos
+    //Ruta para "eliminar" a un producto pero sin borrarlo de la base de datos
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
             productService.delete(id);
-            return ResponseEntity.ok("Deleted user");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    //Ruta para "eliminar" a un producto pero sin borrarlo de la base de datos
-    @PatchMapping("/deletedBoolean/{id}")
-    public ResponseEntity<?> deleted(@PathVariable Long id){
-        try{
-            productService.deletedBoolean(id);
-            return ResponseEntity.ok("Deleted Boolean product");
+            return ResponseEntity.ok("Delete product");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

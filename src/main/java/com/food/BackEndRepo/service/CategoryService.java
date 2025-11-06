@@ -10,7 +10,6 @@ public interface CategoryService {
     public CategoryDto save (CategoryCreate categoryCreate);
     public CategoryDto edit (CategoryEdit categoryEdit, Long id);
     public CategoryDto findById (Long id);
-    public List<CategoryDto> findAll();
+    public List<CategoryDto> findAllByDeletedFalse();
     public void delete (Long id);
-    public void deletedBoolean (Long id);
 }

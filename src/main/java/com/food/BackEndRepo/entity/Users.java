@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -20,4 +23,14 @@ public class Users extends Base {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    @Builder.Default
+    private List<Orders> orders = new ArrayList<>();
+
+    public void addOrders(Orders or){
+        orders.add(or);
+    }
 }
+

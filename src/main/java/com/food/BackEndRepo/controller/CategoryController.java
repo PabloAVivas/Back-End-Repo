@@ -37,9 +37,9 @@ public class CategoryController {
 
     //Ruta para buscar todas las categorias
     @GetMapping()
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAllByDeletedFalse(){
         try{
-            return ResponseEntity.ok(categoryService.findAll());
+            return ResponseEntity.ok(categoryService.findAllByDeletedFalse());
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -55,23 +55,12 @@ public class CategoryController {
         }
     }
 
-    //Ruta para eliminar una categoria de la base de datos por id
+    //Ruta para "eliminar" una categoria pero sin borrarla de la base de datos por id
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
             categoryService.delete(id);
-            return ResponseEntity.ok("Deleted user");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    //Ruta para "eliminar" una categoria pero sin borrarla de la base de datos por id
-    @PatchMapping("/deletedBoolean/{id}")
-    public ResponseEntity<?> deleted(@PathVariable Long id){
-        try{
-            categoryService.deletedBoolean(id);
-            return ResponseEntity.ok("Deleted Boolean category");
+            return ResponseEntity.ok("Deleted category");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

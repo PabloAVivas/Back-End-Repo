@@ -47,19 +47,13 @@ public class CategoryServiceImp implements CategoryService {
 
     //Busca todas las categorias existentes
     @Override
-    public List<CategoryDto> findAll() {
-        return categoryRepository.findAll().stream().map(categoryMapper::toDto).toList();
-    }
-
-    //Recibe un id de una categoria para eliminarla de la base de datos
-    @Override
-    public void delete(Long id) {
-        categoryRepository.deleteById(id);
+    public List<CategoryDto> findAllByDeletedFalse() {
+        return categoryRepository.findAllByDeletedFalse().stream().map(categoryMapper::toDto).toList();
     }
 
     //Recibe un id de una categoria para "eliminarla" pero no de la base de datos
     @Override
-    public void deletedBoolean(Long id) {
+    public void delete(Long id) {
         Category category = categoryRepository.findById(id).orElseThrow(()-> new NullPointerException("The category with the id was not found " + id));
         category.setDeleted(!category.isDeleted());
         categoryRepository.save(category);

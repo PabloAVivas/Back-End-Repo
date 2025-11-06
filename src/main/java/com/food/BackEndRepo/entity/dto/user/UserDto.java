@@ -1,10 +1,13 @@
 package com.food.BackEndRepo.entity.dto.user;
 
+import com.food.BackEndRepo.entity.Orders;
 import com.food.BackEndRepo.entity.dto.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -17,5 +20,5 @@ public class UserDto {
     String email;
     int cellPhone;
     Role role;
-    boolean deleted;
+    List<Orders> orders;
 }

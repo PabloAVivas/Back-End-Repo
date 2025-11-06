@@ -1,16 +1,17 @@
 package com.food.BackEndRepo;
 
-import com.food.BackEndRepo.entity.Category;
-import com.food.BackEndRepo.entity.Product;
-import com.food.BackEndRepo.entity.Users;
+import com.food.BackEndRepo.entity.*;
 import com.food.BackEndRepo.entity.dto.enums.Role;
-import com.food.BackEndRepo.repository.CategoryRepository;
-import com.food.BackEndRepo.repository.ProductRepository;
-import com.food.BackEndRepo.repository.UserRepository;
+import com.food.BackEndRepo.entity.dto.enums.State;
+import com.food.BackEndRepo.entity.dto.order.OrderCreate;
+import com.food.BackEndRepo.repository.*;
 import com.food.BackEndRepo.service.Sha256Util;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 @SpringBootApplication
 public class BackEndRepoApplication implements CommandLineRunner {
@@ -18,11 +19,15 @@ public class BackEndRepoApplication implements CommandLineRunner {
 	private final UserRepository userRepository;
 	private final CategoryRepository categoryRepository;
 	private final ProductRepository productRepository;
+	private final OrderDetailRepository orderDetailRepository;
+	private final OrderRepository orderRepository;
 
-	public BackEndRepoApplication(UserRepository userRepository, CategoryRepository categoryRepository, ProductRepository productRepository) {
+	public BackEndRepoApplication(UserRepository userRepository, CategoryRepository categoryRepository, ProductRepository productRepository, OrderDetailRepository orderDetailRepository, OrderRepository orderRepository) {
 		this.userRepository = userRepository;
 		this.categoryRepository = categoryRepository;
 		this.productRepository = productRepository;
+		this.orderDetailRepository = orderDetailRepository;
+		this.orderRepository = orderRepository;
 	}
 
 	public static void main(String[] args) {
@@ -85,6 +90,30 @@ public class BackEndRepoApplication implements CommandLineRunner {
 			System.out.println("The test PRODUCT was created");
 		}else {
 			System.out.println("The test PRODUCT alredy exist");
+		}
+		if (!orderRepository.existsById(1L)){
+			Orders orders = new Orders();
+			orders.setDate(LocalDate.now());
+			orders.setState(State.PENDING);
+			orders.setTotal(0);
+			orders.setDetails(new ArrayList<>());
+
+
+			OrderDetail detail = new OrderDetail();
+			detail.setAmount(3);
+			detail.setSubtotal(75000);
+			detail.setProduct(productRepository.findById(1L).get());
+			orderDetailRepository.save(detail);
+
+			orders.addOrderDetail(detail);
+			orderRepository.save(orders);
+
+			Users users = userRepository.findById(1L).get();
+			users.addOrders(orders);
+			userRepository.save(users);
+			System.out.println("The ORDER and ORDERDETAILS were created");
+		}else {
+			System.out.println("The ORDER and ORDERDETAILS already exist.");
 		}
 	}
 }

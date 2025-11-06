@@ -55,25 +55,20 @@ public class ProductServiceImp implements ProductService {
 
     //Busca todos los productos existentes
     @Override
-    public List<ProductDto> findAll() {
-        return productRepository.findAll().stream().map(productMapper::toDto).toList();
+    public List<ProductDto> findAllByDeletedFalse() {
+        return productRepository.findAllByDeletedFalse().stream().map(productMapper::toDto).toList();
     }
 
     //Busca todos los productos existentes que esten disponibles
     @Override
-    public List<ProductDto> findAllByAvailableProductTrue() {
-        return productRepository.findAllByAvailableProductTrue().stream().map(productMapper::toDto).toList();
+    public List<ProductDto> findAllByAvailableProductTrueAndDeletedFalse() {
+        return productRepository.findAllByAvailableProductTrueAndDeletedFalse().stream().map(productMapper::toDto).toList();
     }
 
-    //Recibe un id de un producto para eliminarlo de la base de datos
-    @Override
-    public void delete(Long id) {
-        productRepository.deleteById(id);
-    }
 
     //Recibe un id de un producto para "eliminarlo" pero no de la base de datos
     @Override
-    public void deletedBoolean(Long id) {
+    public void delete(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()-> new NullPointerException("The product with the id was not found " + id));
         product.setDeleted(!product.isDeleted());
         productRepository.save(product);

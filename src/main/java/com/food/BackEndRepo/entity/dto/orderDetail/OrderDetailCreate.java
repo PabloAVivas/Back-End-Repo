@@ -1,4 +1,10 @@
 package com.food.BackEndRepo.entity.dto.orderDetail;
 
-public class OrderDetailCreate {
+import com.food.BackEndRepo.entity.Product;
+
+public record OrderDetailCreate (
+        int amount,
+        double subtotal,
+        Long productId
+) {
 }

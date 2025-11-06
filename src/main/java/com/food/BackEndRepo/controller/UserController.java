@@ -39,9 +39,9 @@ public class UserController {
 
     //Ruta para buscar a todos los usuarios
     @GetMapping()
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAllByDeletedFalse(){
         try{
-            return ResponseEntity.ok(userService.findAll());
+            return ResponseEntity.ok(userService.findAllByDeletedFalse());
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -57,23 +57,12 @@ public class UserController {
         }
     }
 
-    //Ruta para eliminar a un usuario de la base de datos por id
+    //Ruta para "eliminar" un usuario pero sin borrarlo de la base de datos por id
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{
             userService.delete(id);
-            return ResponseEntity.ok("Deleted user");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    //Ruta para "eliminar" un usuario pero sin borrarlo de la base de datos por id
-    @PatchMapping("/deletedBoolean/{id}")
-    public ResponseEntity<?> deleted(@PathVariable Long id){
-        try{
-            userService.deletedBoolean(id);
-            return ResponseEntity.ok("Deleted Boolean user");
+            return ResponseEntity.ok("Delete user");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

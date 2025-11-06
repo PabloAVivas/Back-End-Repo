@@ -1,6 +1,9 @@
 package com.food.BackEndRepo.entity.dto.user;
 
+import com.food.BackEndRepo.entity.Orders;
 import com.food.BackEndRepo.entity.dto.enums.Role;
+
+import java.util.List;
 
 public record UserCreate(
         String name,
@@ -8,6 +11,7 @@ public record UserCreate(
         String email,
         int cellPhone,
         String password,
-        Role role
+        Role role,
+        List<Orders> orders
 ){
 }

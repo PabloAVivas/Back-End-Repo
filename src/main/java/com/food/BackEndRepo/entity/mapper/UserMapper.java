@@ -29,7 +29,7 @@ public class UserMapper {
                 user.getEmail(),
                 user.getCellPhone(),
                 user.getRole(),
-                user.isDeleted()
+                user.getOrders()
         );
     }
 }

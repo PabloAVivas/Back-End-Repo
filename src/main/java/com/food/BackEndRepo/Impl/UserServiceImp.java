@@ -1,10 +1,12 @@
 package com.food.BackEndRepo.Impl;
 
+import com.food.BackEndRepo.entity.Orders;
 import com.food.BackEndRepo.entity.Users;
 import com.food.BackEndRepo.entity.dto.user.UserCreate;
 import com.food.BackEndRepo.entity.dto.user.UserDto;
 import com.food.BackEndRepo.entity.dto.user.UserEdit;
 import com.food.BackEndRepo.entity.mapper.UserMapper;
+import com.food.BackEndRepo.repository.OrderRepository;
 import com.food.BackEndRepo.repository.UserRepository;
 import com.food.BackEndRepo.service.Sha256Util;
 import com.food.BackEndRepo.service.UserService;
@@ -23,6 +25,9 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     //Recibe parametros para crear un usuario, verifica si el email ingresado ya existe
     //si existe detiene la creacion y devuelve un RuntimeException
@@ -48,31 +53,35 @@ public class UserServiceImp implements UserService {
         return userMapper.toDto(user);
     }
 
+    @Override
+    public UserDto orderAdd(Long id, Long idOrder) {
+        Users users = userRepository.findById(id).orElseThrow(()-> new NullPointerException("The user with the id was not found " + id));
+        Orders orders = orderRepository.findById(idOrder).orElseThrow(()-> new NullPointerException("The order with the id was not found " + id));
+        users.addOrders(orders);
+        userRepository.save(users);
+        return userMapper.toDto(users);
+    }
+
     //Recibe un id para buscar un usuario con ese id
     @Override
     public UserDto findById(Long id) {
         return userMapper.toDto(userRepository.findById(id).orElseThrow(()-> new NullPointerException("The user with the id was not found " + id)));
     }
 
-    //Busca a todos los usuarios existentes
+    //Busca a todos los usuarios que no esten eliminados
     @Override
-    public List<UserDto> findAll() {
-        return userRepository.findAll().stream().map(userMapper::toDto).toList();
-    }
-
-    //Recibe un id del usuario a eliminar de la base de datos
-    @Override
-    public void delete(Long id) {
-        userRepository.deleteById(id);
+    public List<UserDto> findAllByDeletedFalse() {
+        return userRepository.findAllByDeletedFalse().stream().map(userMapper::toDto).toList();
     }
 
     //Recibe un id del usuario para "eliminarlo" pero no de la base de datos
     @Override
-    public void deletedBoolean(Long id) {
+    public void delete(Long id) {
         Users user = userRepository.findById(id).orElseThrow(()-> new NullPointerException("The user with the id was not found " + id));
         user.setDeleted(!user.isDeleted());
         userRepository.save(user);
     }
+
 
     //Recibe un email y lo busca si esta en la base de datos
     @Override
