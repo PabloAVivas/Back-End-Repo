@@ -6,7 +6,6 @@ public record ProductCreate(
         double price,
         int stock,
         Long categoryId,
-        String urlImg,
-        boolean availableProduct
+        String urlImg
 ) {
 }
