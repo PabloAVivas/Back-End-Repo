@@ -3,6 +3,7 @@ package com.food.BackEndRepo;
 import com.food.BackEndRepo.entity.*;
 import com.food.BackEndRepo.entity.dto.enums.Role;
 import com.food.BackEndRepo.entity.dto.enums.State;
+import com.food.BackEndRepo.entity.dto.orderDetail.OrderDetailCreate;
 import com.food.BackEndRepo.repository.*;
 import com.food.BackEndRepo.service.Sha256Util;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class BackEndRepoApplication implements CommandLineRunner {
@@ -95,18 +97,18 @@ public class BackEndRepoApplication implements CommandLineRunner {
 		}
 		try {
 			if (!orderRepository.existsById(1L)){
+				ArrayList<OrderDetail> details = new ArrayList<>();
+
+				OrderDetail detail = new OrderDetail(3,75000, productRepository.findById(1L).get());
+
+				details.add(detail);
+
 				Orders orders = new Orders();
 				orders.setDate(LocalDate.now());
 				orders.setState(State.PENDING);
 				orders.setTotal(0);
-				orders.setDetails(new ArrayList<>());
+				orders.setDetails(details);
 
-
-				OrderDetail detail = new OrderDetail();
-				detail.setAmount(3);
-				detail.setSubtotal(75000);
-				detail.setProduct(productRepository.findById(1L).get());
-				orderDetailRepository.save(detail);
 
 				orders.addOrderDetail(detail);
 				orderRepository.save(orders);
