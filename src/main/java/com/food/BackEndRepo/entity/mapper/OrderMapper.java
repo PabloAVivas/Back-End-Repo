@@ -24,8 +24,8 @@ public class OrderMapper {
         Orders order = new Orders();
         order.setDate(LocalDate.now());
         order.setState(PENDING);
-        order.setTotal(0);
-        order.setDetails(new ArrayList<>());
+        order.setTotal(orderC.total());
+        order.setDetails(orderC.details().stream().map(orderDetailMapper::toEntity).toList());
         return order;
     }
 

@@ -1,14 +1,16 @@
 package com.food.BackEndRepo.Impl;
 
-import com.food.BackEndRepo.entity.OrderDetail;
 import com.food.BackEndRepo.entity.Orders;
 import com.food.BackEndRepo.entity.dto.order.OrderCreate;
 import com.food.BackEndRepo.entity.dto.order.OrderDto;
 import com.food.BackEndRepo.entity.dto.order.OrderEdit;
+import com.food.BackEndRepo.entity.dto.orderDetail.OrderDetailCreate;
+import com.food.BackEndRepo.entity.dto.product.ProductDto;
 import com.food.BackEndRepo.entity.mapper.OrderMapper;
-import com.food.BackEndRepo.repository.OrderDetailRepository;
 import com.food.BackEndRepo.repository.OrderRepository;
 import com.food.BackEndRepo.service.OrderService;
+import com.food.BackEndRepo.service.ProductService;
+import com.food.BackEndRepo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +26,31 @@ public class OrderServiceImp implements OrderService {
     OrderMapper orderMapper;
 
     @Autowired
-    OrderDetailRepository orderDetailRepository;
+    UserService userService;
+
+    @Autowired
+    ProductService productService;
 
     @Override
-    public OrderDto save(OrderCreate orderCreate) {
+    public OrderDto save(OrderCreate orderCreate, Long idUser) {
+        List<Integer> amount = orderCreate.details().stream().map(OrderDetailCreate::amount).toList();
+        List<Long> product = orderCreate.details().stream().map(OrderDetailCreate::productId).toList();
+        for (int i = 0; i < amount.size(); i++) {
+            Integer amt = amount.get(i);
+            Long proId = product.get(i);
+            if (!productService.checkStock(proId, amt)){
+                ProductDto productDto = productService.findById(proId);
+                throw new IllegalArgumentException("No hay stock suficiente para el producto: " + productDto.getName());
+            }
+        }
         Orders orders = orderMapper.toEntity(orderCreate);
         orders = orderRepository.save(orders);
+        userService.orderAdd(idUser, orders);
+        for (int i = 0; i < amount.size(); i++) {
+            Integer amt = amount.get(i);
+            Long proId = product.get(i);
+            productService.subtractStock(proId, amt);
+        }
         return orderMapper.toDto(orders);
     }
 
@@ -37,15 +58,6 @@ public class OrderServiceImp implements OrderService {
     public OrderDto edit(OrderEdit orderEdit, Long id) {
         Orders orders = orderRepository.findById(id).orElseThrow(()-> new NullPointerException("The order with the id was not found " + id));
         orders.setState(orderEdit.getState());
-        orderRepository.save(orders);
-        return orderMapper.toDto(orders);
-    }
-
-    @Override
-    public OrderDto detailAdd(Long id, Long idDetail) {
-        Orders orders = orderRepository.findById(id).orElseThrow(()-> new NullPointerException("The order with the id was not found " + id));
-        OrderDetail orderDetail = orderDetailRepository.findById(idDetail).orElseThrow(()-> new NullPointerException("The orderDetail with the id was not found " + id));
-        orders.addOrderDetail(orderDetail);
         orderRepository.save(orders);
         return orderMapper.toDto(orders);
     }

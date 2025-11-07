@@ -79,4 +79,17 @@ public class ProductServiceImp implements ProductService {
     public List<ProductDto> findByCategoryName(String name) {
             return productRepository.findByCategoryName(name).stream().map(productMapper::toDto).toList();
     }
+
+    @Override
+    public boolean checkStock(Long id, int amount) {
+        Product product = productRepository.findById(id).orElseThrow(()-> new NullPointerException("The product with the id was not found " + id));
+        return product.checkStock(amount);
+    }
+
+    @Override
+    public void subtractStock(Long id, int amount) {
+        Product product = productRepository.findById(id).orElseThrow(()-> new NullPointerException("The product with the id was not found " + id));
+        product.subtractStock(amount);
+        productRepository.save(product);
+    }
 }

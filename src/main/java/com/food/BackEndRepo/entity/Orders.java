@@ -23,7 +23,7 @@ public class Orders extends Base {
 
     private double total;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "order_id")
     @Builder.Default
     private List<OrderDetail> details = new ArrayList<>();

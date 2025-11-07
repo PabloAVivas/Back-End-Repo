@@ -14,4 +14,6 @@ public interface ProductService {
     public List<ProductDto> findAllByAvailableProductTrueAndDeletedFalse();
     public void delete (Long id);
     public List<ProductDto> findByCategoryName(String name);
+    public boolean checkStock (Long id, int amount);
+    public void subtractStock (Long id, int amount);
 }

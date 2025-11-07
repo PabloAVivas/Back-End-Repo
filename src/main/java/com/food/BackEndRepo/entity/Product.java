@@ -22,4 +22,12 @@ public class Product extends Base {
 
     private String urlImg;
     private boolean availableProduct;
+
+    public boolean checkStock (int amount){
+        return stock>=amount;
+    }
+
+    public void subtractStock (int amount){
+        stock = stock-amount;
+    }
 }

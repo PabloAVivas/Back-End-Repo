@@ -24,7 +24,7 @@ public class Users extends Base {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "users_id")
     @Builder.Default
     private List<Orders> orders = new ArrayList<>();

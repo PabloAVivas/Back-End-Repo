@@ -54,9 +54,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserDto orderAdd(Long id, Long idOrder) {
+    public UserDto orderAdd(Long id, Orders orders) {
         Users users = userRepository.findById(id).orElseThrow(()-> new NullPointerException("The user with the id was not found " + id));
-        Orders orders = orderRepository.findById(idOrder).orElseThrow(()-> new NullPointerException("The order with the id was not found " + id));
         users.addOrders(orders);
         userRepository.save(users);
         return userMapper.toDto(users);

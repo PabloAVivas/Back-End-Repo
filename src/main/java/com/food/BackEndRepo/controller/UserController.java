@@ -57,15 +57,6 @@ public class UserController {
         }
     }
 
-    @PutMapping("/orderAdd/{id}/{idOrder}")
-    public ResponseEntity<?> edit(@PathVariable Long id,  @PathVariable Long idOrder){
-        try {
-            return ResponseEntity.ok(userService.orderAdd(id, idOrder));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
     //Ruta para "eliminar" un usuario pero sin borrarlo de la base de datos por id
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){

@@ -16,10 +16,10 @@ public class OrderController {
     OrderService orderService;
 
     //Ruta para crear un pedido detalle
-    @PostMapping("/create")
-    public ResponseEntity<?> save(@RequestBody OrderCreate orderCreate){
+    @PostMapping("/create/{idUser}")
+    public ResponseEntity<?> save(@RequestBody OrderCreate orderCreate, @PathVariable Long idUser){
         try{
-            return ResponseEntity.ok(orderService.save(orderCreate));
+            return ResponseEntity.ok(orderService.save(orderCreate, idUser));
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -51,14 +51,6 @@ public class OrderController {
     public ResponseEntity<?> edit(@RequestBody OrderEdit orderEdit, @PathVariable Long id){
         try {
             return ResponseEntity.ok(orderService.edit(orderEdit, id));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-    @PutMapping("/detailAdd/{id}/{idDetail}")
-    public ResponseEntity<?> edit(@PathVariable Long id, @PathVariable Long idDetail){
-        try {
-            return ResponseEntity.ok(orderService.detailAdd(id, idDetail));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
