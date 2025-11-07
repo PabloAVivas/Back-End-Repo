@@ -1,6 +1,7 @@
 package com.food.BackEndRepo.entity.dto.order;
 
-import com.food.BackEndRepo.entity.OrderDetail;
+import com.food.BackEndRepo.entity.dto.enums.Delivery;
+import com.food.BackEndRepo.entity.dto.enums.Payment;
 import com.food.BackEndRepo.entity.dto.enums.State;
 import com.food.BackEndRepo.entity.dto.orderDetail.OrderDetailDto;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,8 @@ public class OrderDto {
     Long id;
     LocalDate date;
     State state;
+    Payment payment;
+    Delivery delivery;
     double total;
     List<OrderDetailDto> details;
 }

@@ -4,6 +4,7 @@ import com.food.BackEndRepo.entity.Users;
 import com.food.BackEndRepo.entity.dto.user.UserCreate;
 import com.food.BackEndRepo.entity.dto.user.UserDto;
 import com.food.BackEndRepo.service.Sha256Util;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ import static com.food.BackEndRepo.entity.dto.enums.Role.USER;
 
 @Component
 public class UserMapper {
+
+    @Autowired
+    OrderMapper orderMapper;
 
     public Users toEntity(UserCreate userC){
         Users user = new Users();
@@ -33,7 +37,7 @@ public class UserMapper {
                 user.getEmail(),
                 user.getCellPhone(),
                 user.getRole(),
-                user.getOrders()
+                user.getOrders().stream().map(orderMapper::toDto).toList()
         );
     }
 }

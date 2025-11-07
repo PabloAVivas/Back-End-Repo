@@ -2,6 +2,7 @@ package com.food.BackEndRepo.entity.dto.user;
 
 import com.food.BackEndRepo.entity.Orders;
 import com.food.BackEndRepo.entity.dto.enums.Role;
+import com.food.BackEndRepo.entity.dto.order.OrderDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,5 @@ public class UserDto {
     String email;
     int cellPhone;
     Role role;
-    List<Orders> orders;
+    List<OrderDto> orders;
 }

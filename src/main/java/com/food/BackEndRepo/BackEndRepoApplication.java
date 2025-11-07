@@ -1,6 +1,8 @@
 package com.food.BackEndRepo;
 
 import com.food.BackEndRepo.entity.*;
+import com.food.BackEndRepo.entity.dto.enums.Delivery;
+import com.food.BackEndRepo.entity.dto.enums.Payment;
 import com.food.BackEndRepo.entity.dto.enums.Role;
 import com.food.BackEndRepo.entity.dto.enums.State;
 import com.food.BackEndRepo.entity.dto.orderDetail.OrderDetailCreate;
@@ -106,6 +108,8 @@ public class BackEndRepoApplication implements CommandLineRunner {
 				Orders orders = new Orders();
 				orders.setDate(LocalDate.now());
 				orders.setState(State.PENDING);
+				orders.setPayment(Payment.CASH);
+				orders.setDelivery(Delivery.TAKEAWAY);
 				orders.setTotal(0);
 				orders.setDetails(details);
 

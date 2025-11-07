@@ -1,5 +1,7 @@
 package com.food.BackEndRepo.entity;
 
+import com.food.BackEndRepo.entity.dto.enums.Delivery;
+import com.food.BackEndRepo.entity.dto.enums.Payment;
 import com.food.BackEndRepo.entity.dto.enums.State;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +24,12 @@ public class Orders extends Base {
     private State state;
 
     private double total;
+
+    @Enumerated(EnumType.STRING)
+    private Payment payment;
+
+    @Enumerated(EnumType.STRING)
+    private Delivery delivery;
 
     @OneToMany(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "order_id")
