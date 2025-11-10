@@ -26,9 +26,6 @@ public class UserServiceImp implements UserService {
     @Autowired
     UserMapper userMapper;
 
-    @Autowired
-    OrderRepository orderRepository;
-
     //Recibe parametros para crear un usuario, verifica si el email ingresado ya existe
     //si existe detiene la creacion y devuelve un RuntimeException
     //si no, crea el usuario y lo guarda en la base de datos
@@ -53,6 +50,7 @@ public class UserServiceImp implements UserService {
         return userMapper.toDto(user);
     }
 
+    //Recibe un id y un pedido para asignarlo a un usuario
     @Override
     public UserDto orderAdd(Long id, Orders orders) {
         Users users = userRepository.findById(id).orElseThrow(()-> new NullPointerException("The user with the id was not found " + id));

@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class BackEndRepoApplication implements CommandLineRunner {

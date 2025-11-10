@@ -1,6 +1,5 @@
 package com.food.BackEndRepo.entity.dto.order;
 
-import com.food.BackEndRepo.entity.OrderDetail;
 import com.food.BackEndRepo.entity.dto.enums.State;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

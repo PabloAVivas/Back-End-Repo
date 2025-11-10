@@ -31,6 +31,10 @@ public class OrderServiceImp implements OrderService {
     @Autowired
     ProductService productService;
 
+    //Recibe parametros para crear un perdido con sus detalles de pedidos
+    //verifica que la cantidad de un producto este disponible para el pedido
+    //en caso de no haber stock sufuciente se lanzara un IllegalArgumentException
+    //en caso de haber stock en todos los detalles, se creara y guardara el pedido, restando el stock al producto
     @Override
     public OrderDto save(OrderCreate orderCreate, Long idUser) {
         List<Integer> amount = orderCreate.details().stream().map(OrderDetailCreate::amount).toList();
@@ -54,6 +58,7 @@ public class OrderServiceImp implements OrderService {
         return orderMapper.toDto(orders);
     }
 
+    //Recibe parametros para actualizar el estado de un pedido
     @Override
     public OrderDto edit(OrderEdit orderEdit, Long id) {
         Orders orders = orderRepository.findById(id).orElseThrow(()-> new NullPointerException("The order with the id was not found " + id));
@@ -62,16 +67,24 @@ public class OrderServiceImp implements OrderService {
         return orderMapper.toDto(orders);
     }
 
+    //Recibe parametros para buscar un pedido mediante su id
     @Override
     public OrderDto findById(Long id) {
         return orderMapper.toDto(orderRepository.findById(id).orElseThrow(()-> new NullPointerException("The order with the id was not found " + id)));
     }
 
+    //Busca y devuelve todos los pedidos que no esten eliminados
     @Override
     public List<OrderDto> findAllByDeletedFalse() {
         return orderRepository.findAllByDeletedFalse().stream().map(orderMapper::toDto).toList();
     }
 
+    @Override
+    public List<OrderDto> findOrdersByUserIdAndNotDeleted(Long userId) {
+        return orderRepository.findOrdersByUserIdAndNotDeleted(userId).stream().map(orderMapper::toDto).toList();
+    }
+
+    //Recibe el id de un pedido para "eliminarlo" pero no de la base de datos
     @Override
     public void delete(Long id) {
         Orders orders = orderRepository.findById(id).orElseThrow(()-> new NullPointerException("The order with the id was not found " + id));

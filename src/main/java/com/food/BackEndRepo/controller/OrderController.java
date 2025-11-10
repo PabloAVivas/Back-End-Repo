@@ -15,7 +15,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    //Ruta para crear un pedido detalle
+    //Ruta para crear un pedido
     @PostMapping("/create/{idUser}")
     public ResponseEntity<?> save(@RequestBody OrderCreate orderCreate, @PathVariable Long idUser){
         try{
@@ -25,7 +25,7 @@ public class OrderController {
         }
     }
 
-    //Ruta para buscar a un pedido detalle por id
+    //Ruta para buscar a un pedido por id
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         try{
@@ -35,7 +35,7 @@ public class OrderController {
         }
     }
 
-    //Ruta para listar todos los pedido detalles
+    //Ruta para listar todos los pedido
     @GetMapping()
     public ResponseEntity<?> findAllByDeletedFalse(){
         try{
@@ -45,8 +45,18 @@ public class OrderController {
         }
     }
 
+    //Ruta para listar todos los pedidos de un solo usuario
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<?> findOrdersByUserIdAndNotDeleted(@PathVariable Long userId){
+        try{
+            return ResponseEntity.ok(orderService.findOrdersByUserIdAndNotDeleted(userId));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
-    //Ruta para editar un pedido detalle por id
+
+    //Ruta para actualizar el estado del pedido por id
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> edit(@RequestBody OrderEdit orderEdit, @PathVariable Long id){
         try {
@@ -56,7 +66,7 @@ public class OrderController {
         }
     }
 
-    //Ruta para "eliminar" a un pedido detalle pero sin borrarlo de la base de datos
+    //Ruta para "eliminar" a un pedido pero sin borrarlo de la base de datos
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         try{

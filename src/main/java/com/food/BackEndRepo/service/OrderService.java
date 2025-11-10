@@ -12,5 +12,6 @@ public interface OrderService {
     public OrderDto edit (OrderEdit orderEdit, Long id);
     public OrderDto findById (Long id);
     public List<OrderDto> findAllByDeletedFalse();
+    public List<OrderDto> findOrdersByUserIdAndNotDeleted(Long userId);
     public void delete (Long id);
 }

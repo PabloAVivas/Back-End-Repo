@@ -1,6 +1,5 @@
 package com.food.BackEndRepo.entity.dto.orderDetail;
 
-import com.food.BackEndRepo.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
