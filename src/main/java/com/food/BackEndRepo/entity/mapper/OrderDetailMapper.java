@@ -23,11 +23,12 @@ public class OrderDetailMapper {
     }
 
     public OrderDetailDto toDto (OrderDetail orderDetail){
+        orderDetail.getProduct().getName();
         return new OrderDetailDto(
                 orderDetail.getId(),
                 orderDetail.getAmount(),
                 orderDetail.getSubtotal(),
-                productMapper.toDto(orderDetail.getProduct())
+                orderDetail.getProduct().getName()
         );
     }
 }

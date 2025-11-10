@@ -14,5 +14,5 @@ public class OrderDetailDto {
     Long id;
     int amount;
     double subtotal;
-    ProductDto product;
+    String product;
 }
