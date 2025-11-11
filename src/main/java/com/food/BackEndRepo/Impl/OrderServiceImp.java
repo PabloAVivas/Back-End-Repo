@@ -5,6 +5,7 @@ import com.food.BackEndRepo.entity.dto.order.OrderCreate;
 import com.food.BackEndRepo.entity.dto.order.OrderDto;
 import com.food.BackEndRepo.entity.dto.order.OrderEdit;
 import com.food.BackEndRepo.entity.dto.orderDetail.OrderDetailCreate;
+import com.food.BackEndRepo.entity.dto.orderDetail.OrderDetailDto;
 import com.food.BackEndRepo.entity.dto.product.ProductDto;
 import com.food.BackEndRepo.entity.mapper.OrderMapper;
 import com.food.BackEndRepo.repository.OrderRepository;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import static com.food.BackEndRepo.entity.dto.enums.State.CANCELED;
 
 @Service
 public class OrderServiceImp implements OrderService {
@@ -59,10 +61,16 @@ public class OrderServiceImp implements OrderService {
     }
 
     //Recibe parametros para actualizar el estado de un pedido
+    //Si el pedido pasa a CANCELED se llama a una funcion para devolver el stock
     @Override
     public OrderDto edit(OrderEdit orderEdit, Long id) {
         Orders orders = orderRepository.findById(id).orElseThrow(()-> new NullPointerException("The order with the id was not found " + id));
         orders.setState(orderEdit.getState());
+        if (orders.getState() == CANCELED){
+            for (int i = 0; i < orders.getDetails().size(); i++){
+                productService.addStock(orders.getDetails().get(i).getProduct().getId(), orders.getDetails().get(i).getAmount());
+            }
+        }
         orderRepository.save(orders);
         return orderMapper.toDto(orders);
     }

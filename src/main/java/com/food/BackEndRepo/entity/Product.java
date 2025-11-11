@@ -30,4 +30,8 @@ public class Product extends Base {
     public void subtractStock (int amount){
         stock = stock-amount;
     }
+
+    public void addStock (int amount){
+        stock = stock+amount;
+    }
 }

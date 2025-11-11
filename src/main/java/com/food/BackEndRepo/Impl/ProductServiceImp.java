@@ -94,4 +94,12 @@ public class ProductServiceImp implements ProductService {
         product.subtractStock(amount);
         productRepository.save(product);
     }
+
+    //Recibe un id de un producto y se le devuelve a su stock la cantidad ingresada
+    @Override
+    public void addStock(Long id, int amount) {
+        Product product = productRepository.findById(id).orElseThrow(()-> new NullPointerException("The product with the id was not found " + id));
+        product.addStock(amount);
+        productRepository.save(product);
+    }
 }

@@ -16,4 +16,5 @@ public interface ProductService {
     public List<ProductDto> findByCategoryName(String name);
     public boolean checkStock (Long id, int amount);
     public void subtractStock (Long id, int amount);
+    public void addStock (Long id, int amount);
 }
