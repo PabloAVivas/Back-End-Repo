@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Setter
@@ -18,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDto {
     Long id;
-    LocalDate date;
+    LocalDateTime date;
     State state;
     Payment payment;
     Delivery delivery;

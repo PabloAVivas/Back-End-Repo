@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static com.food.BackEndRepo.entity.dto.enums.State.PENDING;
 
@@ -18,7 +19,7 @@ public class OrderMapper {
 
     public Orders toEntity (OrderCreate orderC){
         Orders order = new Orders();
-        order.setDate(LocalDate.now());
+        order.setDate(LocalDateTime.now());
         order.setState(PENDING);
         order.setPayment(orderC.payment());
         order.setDelivery(orderC.delivery());

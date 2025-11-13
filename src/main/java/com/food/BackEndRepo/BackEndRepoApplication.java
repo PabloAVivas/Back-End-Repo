@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @SpringBootApplication
@@ -105,7 +106,7 @@ public class BackEndRepoApplication implements CommandLineRunner {
 				details.add(detail);
 
 				Orders orders = new Orders();
-				orders.setDate(LocalDate.now());
+				orders.setDate(LocalDateTime.now());
 				orders.setState(State.PENDING);
 				orders.setPayment(Payment.CASH);
 				orders.setDelivery(Delivery.TAKEAWAY);
