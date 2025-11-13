@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDto {
     Long id;
-    LocalDateTime date;
+    String date;
     State state;
     Payment payment;
     Delivery delivery;

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.food.BackEndRepo.entity.dto.enums.State.PENDING;
 
@@ -29,9 +30,10 @@ public class OrderMapper {
     }
 
     public OrderDto toDto (Orders order){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return new OrderDto(
                 order.getId(),
-                order.getDate(),
+                order.getDate().format(formatter),
                 order.getState(),
                 order.getPayment(),
                 order.getDelivery(),
